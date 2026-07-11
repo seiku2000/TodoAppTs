@@ -1,13 +1,14 @@
 //import type{ TodoClas } from "./todoInterface";
+import { v4 as  uuid } from "uuid";
 
 
 export class Todo  {
-public id:number;
+public id:string;
 public done:boolean;
 public createDate:Date;
     
     constructor (  description:string ){
-        this.id = 1;
+        this.id = uuid();
         this.done = false;
         this.createDate = new Date();
         

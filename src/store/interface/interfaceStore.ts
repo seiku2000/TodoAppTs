@@ -1,6 +1,6 @@
-import type { Todo } from "../../todos/models/todoModel";
+import type { Todo  } from "../../todos/models/todoModel";
 
-export  interface  Filtro {
+export interface Filtro {
     All: "All";
     completed: "completed";
     pending: "pending";
@@ -8,6 +8,11 @@ export  interface  Filtro {
 
 export interface Stado {
     todos:Todo[]
-    filters: "All" | "completed" | "pending"
+    filters:(Filtro) | ( "All" | "completed" | "pending");
 
+    
+}
+
+export interface Getodos {
+  //  (filters?: keyof Filtro):Todo[]
 }
