@@ -1,5 +1,8 @@
-import { Todo } from "../todos/models/todoModel";
-import type { Filtro, Getodos, Stado } from "./interface/interfaceStore";
+import { Todo } from "../todos/models";
+import type { addTodoInterface, deleteCompletadosInterface, deleteTodoInterface, Filtro,
+              getCurrentFilterInterface,
+              Getodos, setFIlterInterface, Stado, 
+              ToGleTodoInterface} from "./interface/interfaceStore";
 
 
 const Filters:Filtro = {
@@ -24,7 +27,7 @@ const initStore = () =>{
 }
 
 
-const getTodos = (filters: keyof Filtro = Filters.All):Getodos =>{
+const getTodos:Getodos = (filters: keyof Filtro = Filters.All)=>{
     //throw new Error("methodo no implementado");
     switch(filters){
         case Filters.All:
@@ -47,30 +50,45 @@ const loadStore = () =>{
      throw new Error("methodo no implementado");
 }
 
-const addTodo = (desciption:string) =>{
-    throw new Error("methodo no implementado");
+const addTodo:addTodoInterface = (desciption:string) =>{
+    //throw new Error("methodo no implementado");
+    if(!desciption) throw new Error("descripcion es necesaria")
+        state.todos.push(new Todo(desciption));
+    
 }
 //false boolean
-const  toggleTodo = (todoId:string)=>{
-     throw new Error("methodo no implementado");
+const  toggleTodo:ToGleTodoInterface = (todoId:string)=>{
+    // throw new Error("methodo no implementado");
+    state.todos = state.todos.map (todo =>{
+        if(todo.id === todoId){
+            todo.done =  !todo.done
+        }
+        return todo;
+
+    })
+  
 }
 
-const  deleteTodo = (todoId:string)=>{
-     throw new Error("methodo no implementado");
-}
-const deleteCompletados = () =>{
+const  deleteTodo:deleteTodoInterface = (todoId:string)=>{
+  state.todos = state.todos.filter( todo => todo.id !== todoId)
 
-    throw new Error("methodo no implementado");
+}
+const deleteCompletados:deleteCompletadosInterface = () =>{
+
+    state.todos = state.todos.filter(todo => todo.done)
+
 }
 
-const setFiltro = (filtro:Filtro ) => {
+const setFiltro:setFIlterInterface = (filters:keyof Filtro = Filters.All ) => {
     //state.filters = filtro;
     //console.log(filtro)
-    throw new Error("methodo no implementado");
+    //throw new Error("methodo no implementado");
+    state.filters = filters;
 }
 
-const getCurrentFilter= () =>{
-    throw new Error("methodo no implementado");
+const getCurrentFilter:getCurrentFilterInterface= () =>{
+    //throw new Error("methodo no implementado");
+    return state.filters;
 }
 
 

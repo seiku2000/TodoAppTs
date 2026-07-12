@@ -1,4 +1,5 @@
-import type { Todo  } from "../../todos/models/todoModel";
+import type { Todo, } from "../../todos/models/todoModel";
+//import type { TodoClas } from "../../todos/models/interface/todoInterface";
 
 export interface Filtro {
     All: "All";
@@ -14,5 +15,34 @@ export interface Stado {
 }
 
 export interface Getodos {
-  //  (filters?: keyof Filtro):Todo[]
+   (filters?: keyof Filtro):Todo[]
+  
 }
+
+export interface addTodoInterface {
+    (desciption:string):void
+}
+
+export interface ToGleTodoInterface {
+    (todoId:string):void
+}
+
+export interface deleteTodoInterface {
+    (todoId:string):void
+}
+
+export interface deleteCompletadosInterface {
+    ():void
+}
+
+export interface togleTodoInterface {
+    (todoId:string):void
+}
+
+export interface setFIlterInterface {
+     (filters?: keyof Filtro):void
+}
+ export interface getCurrentFilterInterface {
+    ():Filtro | "All" | "completed" | "pending"
+
+ }
