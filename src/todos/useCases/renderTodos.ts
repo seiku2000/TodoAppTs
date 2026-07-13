@@ -1,5 +1,8 @@
 
 import {  Todo} from "../models/";
-export const renderTodos = (elementId:string, todos:Todo[]) =>{
+import type { RenderTodoInterface } from "./interfaces/renderTodoInter";
 
+
+export const renderTodos:RenderTodoInterface =(elementId:string, todos:Todo[]) =>{
+ console.log(elementId, todos);
 }

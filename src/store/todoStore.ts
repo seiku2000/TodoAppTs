@@ -22,8 +22,8 @@ const state:Stado ={
 }
 
 const initStore = () =>{
-    console.log(state);
-    console.log('initstore')
+  //  console.log(state);
+    //console.log('initstore')
 }
 
 

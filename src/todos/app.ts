@@ -1,18 +1,22 @@
 import { todoStore } from '../store';
 import appHtml from './app.html?raw';
+import type { ElementosIds, AppProps } from './appInterface';
+import { renderTodos } from './useCases';
 
-interface AppProps{
-    (elementId:string):void
-    
+const ElementIDs:ElementosIds  = {
+    TodoList: 'todo-list',
 }
+
+
+
 
 
 export const App:AppProps = (elementId:string):void => {
 
 
     const displayTools = () => {
-     const todos = todoStore.getTodos();
-     console.log(todos); 
+     const todos = todoStore.getTodos(todoStore.getCurrentFilter());
+     renderTodos(ElementIDs.TodoList,todos);
     }
 
 

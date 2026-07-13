@@ -15,7 +15,8 @@ export interface Stado {
 }
 
 export interface Getodos {
-   (filters?: keyof Filtro):Todo[]
+  // (filters?: keyof Filtro):Todo[]
+   (filters?: Filtro | "All" | "completed" | "pending"):Todo[]
   
 }
 
@@ -44,5 +45,6 @@ export interface setFIlterInterface {
 }
  export interface getCurrentFilterInterface {
     ():Filtro | "All" | "completed" | "pending"
+    
 
  }
