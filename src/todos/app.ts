@@ -4,7 +4,7 @@ import type { ElementosIds, AppProps } from './appInterface';
 import { renderTodos } from './useCases';
 
 const ElementIDs:ElementosIds  = {
-    TodoList: 'todo-list',
+    TodoList: '.todo-list',
 }
 
 
