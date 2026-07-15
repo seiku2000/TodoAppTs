@@ -8,7 +8,7 @@ let element:HTMLElement
 
 
 export const renderTodos:RenderTodoInterface =(elementId:string, todos:Todo[]) =>{
- console.log(elementId, todos);
+ //console.log(elementId, todos);
  //const element =document.querySelector(elementId);
  if(!element) 
    element = document.querySelector(elementId);
