@@ -1,4 +1,5 @@
 import { todoStore } from '../store';
+import { Filters } from '../store/todoStore';
 import appHtml from './app.html?raw';
 import type { ElementosIds, AppProps } from './appInterface';
 import { renderTodos } from './useCases';
@@ -6,7 +7,9 @@ import { renderTodos } from './useCases';
 const ElementIDs: ElementosIds = {
     TodoList: '.todo-list',
     TodoInput: '#new-todo-input',
-   
+    ClearCompleted: '.clear-completed',
+    TodoFiltro: '.filtro'
+
 }
 
 
@@ -35,10 +38,12 @@ export const App: AppProps = (elementId: string): void => {
 
     //referencias HTML
 
-    const newDescripcion = document.querySelector(ElementIDs.TodoInput);
-    const todoListUl = document.querySelector(ElementIDs.TodoList);;
-    //const DeleteButton = document.querySelector(ElementIDs.TodoDestroy);
-    
+    const newDescripcion: HTMLInputElement = document.querySelector(ElementIDs.TodoInput);
+    const todoListUl: HTMLUListElement = document.querySelector(ElementIDs.TodoList);
+
+    const ClearCompletedButton: HTMLButtonElement = document.querySelector(ElementIDs.ClearCompleted);
+    const filterLis: NodeListOf<HTMLLIElement> = document.querySelectorAll(ElementIDs.TodoFiltro);
+
 
     newDescripcion.addEventListener('keyup', (event: KeyboardEvent) => {
         //console.log(event);
@@ -57,30 +62,60 @@ export const App: AppProps = (elementId: string): void => {
     todoListUl.addEventListener('click', (event: MouseEvent) => {
         let target = event.target as HTMLElement;
         const element = target.closest('[data-id]');
-       // console.log(element)
         todoStore.toggleTodo(element.getAttribute('data-id'));
         displayTools();
-        // console.log(event.target);
-        //console.log(target);
     });
 
 
 
 
-    todoListUl.addEventListener('click' ,(event:MouseEvent)=>{
+    todoListUl.addEventListener('click', (event: MouseEvent) => {
         const target: HTMLElement = event.target as HTMLElement;
         const destroyElement = target.classList.contains('destroy');
-        const element =target.closest('[data-id]');
+        const element = target.closest('[data-id]');
 
-        if(destroyElement){
+        if (destroyElement) {
             todoStore.deleteTodo(element.getAttribute('data-id'));
             displayTools();
         }
 
-       
- 
-
     })
+    ClearCompletedButton.addEventListener('click', () => {
+        todoStore.deleteCompletados();
+        displayTools();
+    });
+
+    // filterUl.forEach()
+    filterLis.forEach((filter) => {
+        filter.addEventListener('click', (filterEvent) => {
+            filterLis.forEach(RemoveClass => RemoveClass.classList.remove('selected'));
+            const target = filterEvent.target as HTMLElement;
+            target.classList.add('selected');
+            let filterValue = target.textContent;
+           // console.log(filterValue);
+            
+            /*
+            switch(filterValue){
+                case
+            }*/
+           switch(filterValue){
+            case 'Todos':
+                todoStore.setFiltro(Filters.All);
+                break;
+            case 'Pendientes':
+                todoStore.setFiltro(Filters.pending);
+                break;
+            case 'Completados':
+                todoStore.setFiltro(Filters.completed);
+                break;
+                
+        
+           }
+           displayTools();
+
+        })
+    })
+
 
 
 }

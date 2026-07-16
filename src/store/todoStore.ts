@@ -5,7 +5,7 @@ import type { addTodoInterface, deleteCompletadosInterface, deleteTodoInterface,
               ToGleTodoInterface} from "./interface/interfaceStore";
 
 
-const Filters:Filtro = {
+export const Filters:Filtro = {
     All: "All",
     completed:"completed",
     pending:"pending",
@@ -22,8 +22,29 @@ const state:Stado ={
 }
 
 const initStore = () =>{
+    loadStore();
   //  console.log(state);
     //console.log('initstore')
+}
+const loadStore = () =>{
+    
+    // console.log(localStorage.getItem('state'));
+     if(!localStorage.getItem('state'))return;
+
+    //forma de tipar objetos desestructurados
+     let {todos= [],filters = Filters.All}:    //obteniendo los valores de localStorage
+     {todos:Todo[], filters: keyof Filtro} = JSON.parse(localStorage.getItem('state'));
+     //console.log(todos,filters);
+    // console.log(todos,filters);
+    //asignando los valores a el state
+    state.todos = todos;
+    state.filters = filters;
+}
+
+//metodo para guardar el state en el localStorage
+const saveStateLocalStorage = () =>{
+   // localStorage.setItem('state','hola como esta')
+    localStorage.setItem('state',JSON.stringify(state))
 }
 
 
@@ -46,15 +67,13 @@ const getTodos:Getodos = (filters: keyof Filtro = Filters.All)=>{
 }
 
 
-const loadStore = () =>{
-     throw new Error("methodo no implementado");
-}
+
 
 const addTodo:addTodoInterface = (desciption:string) =>{
     //throw new Error("methodo no implementado");
     if(!desciption) throw new Error("descripcion es necesaria")
         state.todos.push(new Todo(desciption));
-    
+    saveStateLocalStorage();
 }
 //false boolean
 const  toggleTodo:ToGleTodoInterface = (todoId:string)=>{
@@ -66,16 +85,19 @@ const  toggleTodo:ToGleTodoInterface = (todoId:string)=>{
         return todo;
 
     })
+    saveStateLocalStorage();
   
 }
 
 const  deleteTodo:deleteTodoInterface = (todoId:string)=>{
   state.todos = state.todos.filter( todo => todo.id !== todoId)
+  saveStateLocalStorage();
 
 }
 const deleteCompletados:deleteCompletadosInterface = () =>{
 
-    state.todos = state.todos.filter(todo => todo.done)
+    state.todos = state.todos.filter(todo => !todo.done)
+    saveStateLocalStorage();
 
 }
 
@@ -84,6 +106,7 @@ const setFiltro:setFIlterInterface = (filters:keyof Filtro = Filters.All ) => {
     //console.log(filtro)
     //throw new Error("methodo no implementado");
     state.filters = filters;
+    saveStateLocalStorage()
 }
 
 const getCurrentFilter:getCurrentFilterInterface= () =>{
