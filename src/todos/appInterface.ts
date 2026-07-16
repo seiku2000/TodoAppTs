@@ -3,6 +3,7 @@ export interface ElementosIds {
     TodoInput: string;
     ClearCompleted: string;
     TodoFiltro: string;
+    PendingCount: string;
    
 }
 

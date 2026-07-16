@@ -7,3 +7,6 @@ export interface CreateTodoHtmlInterface {
     (todo:Todo):HTMLLIElement
 
 }
+export interface RenderPendingInterface {
+    (elementId?: string): void;
+}
